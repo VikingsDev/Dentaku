@@ -7,7 +7,13 @@ from fbchat.models import *
 # Subclass fbchat.Client and override required methods
 class dentaku_bot(Client):
     def onMessage(self, author_id, message_object, thread_id, thread_type, **kwargs):
-        if "!" in str(message_object.text)[0]:
+        if (author.first_name == "Frank") and ("bad" in message_object.text.split()):
+            self.send(
+                Message(text="That is false, my master."),
+                thread_id=thread_id,
+                thread_type=thread_type, 
+            )
+        elif "!" in str(message_object.text)[0]:
             command = str(message_object.text).replace("!", "").split(" ")
             parameters = {
                 "user": command[1:],
