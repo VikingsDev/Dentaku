@@ -10,7 +10,7 @@ Command==0.1.0
 fbchat==1.9.6
 firebase-admin==3.2.1
 gitdb2==2.0.6
-GitPython==3.0.5
+GitPython==3.0.7
 google-api-core==1.16.0
 google-api-python-client==1.7.11
 google-auth==1.11.0
