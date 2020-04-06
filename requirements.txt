@@ -1,6 +1,6 @@
 aenum==2.2.3
 attrs==19.3.0
-beautifulsoup4==4.8.2
+beautifulsoup4==4.9.0
 bs4==0.0.1
 CacheControl==0.12.6
 cachetools==4.0.0
