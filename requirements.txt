@@ -11,7 +11,7 @@ Command==0.1.0
 fbchat==1.9.6
 firebase-admin==4.2.0
 Flask==1.1.2
-gitdb==4.0.4
+gitdb==4.0.5
 GitPython==3.1.1
 google==2.0.3
 google-api-core==1.17.0
