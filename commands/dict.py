@@ -42,8 +42,8 @@ class dict(Command):
                         for i, d in enumerate(results):
                             response_text += "\n{}. {} – ".format(i + 1, d['partOfSpeech']) + d['definition']
                 except:
-                    response_text = "Unable to get information about the search term. Please check your spelling." \
-                                    " For a list of commands type '!dict help'."
+                    response_text = "Unable to get information about the search term. Please check your spelling. " \
+                                    "For a list of commands type '!dict help'."
 
         self.client.send(
             Message(text=response_text),

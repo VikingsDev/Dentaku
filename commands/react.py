@@ -121,7 +121,7 @@ class react(Command):
                                         + "\nAuto react is now " + self.database["auto"] + "."
                 else:
                     response_text = "@" + self.author.first_name \
-                                        + "Sorry, I didn't get that."
+                                        + "S orry, I didn't get that."
                 self.client.send(
                     Message(text=response_text, mentions=mentions),
                     thread_id=self.thread_id,
