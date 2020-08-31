@@ -66,11 +66,12 @@ class dentaku_bot(Client):
                 )
             except Exception as e:
                 # Sends error message to current chat
-                '''self.send(
-                    Message(text="Error: " + traceback.format_exc()),
+                self.send(
+                    Message(text="Oh no! An error has occurred. Type !subscribe to receive error details.",
+                            reply_to_id=message_object.uid),
                     thread_id=thread_id,
                     thread_type=thread_type,
-                )'''
+                )
                 # Sends error message to subscribed members
                 for thread in database['subscription']:
                     self.send(
@@ -109,11 +110,12 @@ class dentaku_bot(Client):
                         )
                     except Exception as e:
                         # Sends error message to current chat
-                        '''self.send(
-                            Message(text="Error: " + traceback.format_exc()),
+                        self.send(
+                            Message(text="Oh no! An error has occurred. Type !subscribe to receive error details.",
+                                    reply_to_id=message_object.uid),
                             thread_id=thread_id,
                             thread_type=thread_type,
-                        )'''
+                        )
                         # Sends error message to subscribed members
                         for thread in database['subscription']:
                             self.send(
