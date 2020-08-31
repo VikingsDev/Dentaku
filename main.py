@@ -66,24 +66,40 @@ class dentaku_bot(Client):
                 )
             except Exception as e:
                 # Sends error message to current chat
-                self.send(
-                    Message(text="Oh no! An error has occurred. Type !subscribe to receive error details.",
-                            reply_to_id=message_object.uid),
-                    thread_id=thread_id,
-                    thread_type=thread_type,
-                )
+                if thread_type is ThreadType.GROUP or author_id not in database['subscription']:
+                    self.send(
+                        Message(text="Oh no! An error has occurred. Type !subscribe to receive error details.",
+                                reply_to_id=message_object.uid),
+                        thread_id=thread_id,
+                        thread_type=thread_type,
+                    )
                 # Sends error message to subscribed members
                 for thread in database['subscription']:
-                    self.send(
-                        Message(text="Message triggering error:\n\"{}\"".format(message_object.text)),
-                        thread_id=thread,
-                        thread_type=ThreadType.USER,
-                    )
-                    self.send(
-                        Message(text="Error: " + traceback.format_exc()),
-                        thread_id=thread,
-                        thread_type=ThreadType.USER,
-                    )
+                    # Check if trigger is in PM
+                    if thread == thread_id:
+                        self.send(
+                            Message(text="This message triggered an error!", reply_to_id=message_object.uid),
+                            thread_id=thread,
+                            thread_type=ThreadType.USER,
+                        )
+                        self.send(
+                            Message(text="Error: " + traceback.format_exc()),
+                            thread_id=thread,
+                            thread_type=ThreadType.USER,
+                        )
+                    elif thread_type is ThreadType.GROUP and \
+                        thread in self.fetchThreadInfo(thread_id)[thread_id].participants:
+                        # Sends info through PMs
+                        self.send(
+                            Message(text="Message triggering error:\n\"{}\"".format(message_object.text)),
+                            thread_id=thread,
+                            thread_type=ThreadType.USER,
+                        )
+                        self.send(
+                            Message(text="Error: " + traceback.format_exc()),
+                            thread_id=thread,
+                            thread_type=ThreadType.USER,
+                        )
         elif author_id != client.uid:
             for word in keywords.keys():
                 word = word.lower()
@@ -110,24 +126,40 @@ class dentaku_bot(Client):
                         )
                     except Exception as e:
                         # Sends error message to current chat
-                        self.send(
-                            Message(text="Oh no! An error has occurred. Type !subscribe to receive error details.",
-                                    reply_to_id=message_object.uid),
-                            thread_id=thread_id,
-                            thread_type=thread_type,
-                        )
+                        if thread_type is ThreadType.GROUP or author_id not in database['subscription']:
+                            self.send(
+                                Message(text="Oh no! An error has occurred. Type !subscribe to receive error details.",
+                                        reply_to_id=message_object.uid),
+                                thread_id=thread_id,
+                                thread_type=thread_type,
+                            )
                         # Sends error message to subscribed members
                         for thread in database['subscription']:
-                            self.send(
-                                Message(text="Message triggering error:\n\"{}\"".format(message_object.text)),
-                                thread_id=thread,
-                                thread_type=ThreadType.USER,
-                            )
-                            self.send(
-                                Message(text="Error: " + traceback.format_exc()),
-                                thread_id=thread,
-                                thread_type=ThreadType.USER,
-                            )
+                            # Check if trigger is in PM
+                            if thread == thread_id:
+                                self.send(
+                                    Message(text="This message triggered an error!", reply_to_id=message_object.uid),
+                                    thread_id=thread,
+                                    thread_type=ThreadType.USER,
+                                )
+                                self.send(
+                                    Message(text="Error: " + traceback.format_exc()),
+                                    thread_id=thread,
+                                    thread_type=ThreadType.USER,
+                                )
+                            elif thread_type is ThreadType.GROUP and \
+                                    thread in self.fetchThreadInfo(thread_id)[thread_id].participants:
+                                # Sends info through PMs
+                                self.send(
+                                    Message(text="Message triggering error:\n\"{}\"".format(message_object.text)),
+                                    thread_id=thread,
+                                    thread_type=ThreadType.USER,
+                                )
+                                self.send(
+                                    Message(text="Error: " + traceback.format_exc()),
+                                    thread_id=thread,
+                                    thread_type=ThreadType.USER,
+                                )
 
 
 def export_env():
