@@ -65,11 +65,25 @@ class dentaku_bot(Client):
                     thread_type=thread_type,
                 )
             except Exception as e:
+                # Sends error message to current chat
                 self.send(
-                    Message(text="Error: " + traceback.format_exc()),
+                    Message(text="Oh no! An error has occurred. Type !subscribe to receive error details.",
+                            reply_to_id=message_object.uid),
                     thread_id=thread_id,
                     thread_type=thread_type,
                 )
+                # Sends error message to subscribed members
+                for thread in database['subscription']:
+                    self.send(
+                        Message(text="Message triggering error:\n\"{}\"".format(message_object.text)),
+                        thread_id=thread,
+                        thread_type=ThreadType.USER,
+                    )
+                    self.send(
+                        Message(text="Error: " + traceback.format_exc()),
+                        thread_id=thread,
+                        thread_type=ThreadType.USER,
+                    )
         elif author_id != client.uid:
             for word in keywords.keys():
                 word = word.lower()
@@ -95,11 +109,25 @@ class dentaku_bot(Client):
                             thread_type=thread_type,
                         )
                     except Exception as e:
+                        # Sends error message to current chat
                         self.send(
-                            Message(text="Error: " + traceback.format_exc()),
+                            Message(text="Oh no! An error has occurred. Type !subscribe to receive error details.",
+                                    reply_to_id=message_object.uid),
                             thread_id=thread_id,
                             thread_type=thread_type,
                         )
+                        # Sends error message to subscribed members
+                        for thread in database['subscription']:
+                            self.send(
+                                Message(text="Message triggering error:\n\"{}\"".format(message_object.text)),
+                                thread_id=thread,
+                                thread_type=ThreadType.USER,
+                            )
+                            self.send(
+                                Message(text="Error: " + traceback.format_exc()),
+                                thread_id=thread,
+                                thread_type=ThreadType.USER,
+                            )
 
 
 def export_env():
