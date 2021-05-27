@@ -52,5 +52,5 @@ smmap==3.0.4
 smmap2==3.0.1
 soupsieve==2.0.1
 uritemplate==3.0.1
-urllib3==1.25.10
+urllib3==1.26.5
 Werkzeug==1.0.1
